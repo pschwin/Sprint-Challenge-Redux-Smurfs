@@ -12,11 +12,11 @@ import {getSmurfs, addASmurf} from '../actions';
 class App extends Component {
 
   state = {
-    smurf: {
+    
       name: '',
       age: '',
       height: ''
-    }
+    
   }
 
   componentDidMount = event =>{
@@ -25,19 +25,19 @@ class App extends Component {
 
   handleInputChange = event =>{
     this.setState({
-      smurf: {...this.state.smurf, [event.target.name]: event.target.value}
+      ...this.state, [event.target.name]: event.target.value
     })
   }
 
   addASmurf = e =>{
     e.preventDefault();
-    this.props.addASmurf(this.state.smurfState);
+    this.props.addASmurf(this.state);
     this.setState({
-      smurfState: {
+      
         name: '',
         height: '',
         age: ''
-      }
+      
     })
   }
 
@@ -47,12 +47,12 @@ class App extends Component {
         <h1>SMURFS! 2.0 W/ Redux</h1>
         <div className="the-smurfs">
         
-        {this.props.smurfs.map((smurf, index) =>{
+        {this.props.smurfs.map((smurfy) =>{
           return(
             <div className="mapped-smurf">
-              <h1>Name: {smurf.name}</h1>
-              <h2>Age: {smurf.age}</h2>
-              <h2>Height: {smurf.height}</h2>
+              <h1>Name: {smurfy.name}</h1>
+              <h2>Age: {smurfy.age}</h2>
+              <h2>Height: {smurfy.height}</h2>
             </div>
           )
         })}
@@ -62,19 +62,19 @@ class App extends Component {
           <input
             onChange={this.handleInputChange}
             placeholder="name"
-            value={this.state.smurfState.name}
+            value={this.state.name}
             name="name"
           />
           <input
             onChange={this.handleInputChange}
             placeholder="age"
-            value={this.state.smurfState.age}
+            value={this.state.age}
             name="age"
           />
           <input
             onChange={this.handleInputChange}
             placeholder="height"
-            value={this.state.smurfState.height}
+            value={this.state.height}
             name="height"
           />
           <button type="submit">Add to the village</button>
@@ -86,7 +86,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state =>({
-  smurfState: state.smurfState,
+  smurfs: state.smurfs,
   fetchingSmurfs: state.fetchingSmurfs,
   addingSmurf: state.addingSmurf
 })
