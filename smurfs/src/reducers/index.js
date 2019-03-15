@@ -4,11 +4,13 @@
 
 import{
   FETCHING_SMURFS,
-  ADDING_SMURF,
-  DELETING_SMURF,
-  UPDATING_SMURF,
-  FETCHING_SMURFS_ERROR
+  FETCHING_SMURFS_SUCCESS,
+  FETCHING_SMURFS_FAILURE,
+  ADD_SMURF,
+  ADD_SMURF_SUCCESS,
+  ADD_SMURF_FAILURE
 } from './actions';
+
 
 
 /*
@@ -19,8 +21,6 @@ const initialState =
    smurfs: [],
    fetchingSmurfs: false,
    addingSmurf: false,
-   updatingSmurf: false,
-   deletingSmurf: false,
    error: null
  }
 
@@ -30,24 +30,45 @@ const initialState =
      case FETCHING_SMURFS:
       return{
         ...state,
+        fetchingSmurfs: true,
+        error: ''
 
       }
-      case ADDING_SMURF:
+      case FETCHING_SMURFS_SUCCESS:
         return{
-          ...state
+          ...state,
+          fetchingSmurfs: false,
+          smurfs: action.payload,
+          error: ''
         }
-      case DELETING_SMURF:
+      case FETCHING_SMURFS_FAILURE:
         return{
-          ...state
+          ...state,
+          fetchingSmurfs: false,
+          error: 'Bad News'
         }
-      case UPDATING_SMURF:
-        return{
-          ...state
-        }
-      case FETCHING_SMURFS_ERROR:
-        return{
-          ...state
-        }
+
+        case ADD_SMURF:
+          return{
+            ...state,
+            addingSmurf: true,
+            error: ''
+          }
+        
+        case ADD_SMURF_SUCCESS:
+          return{
+            ...state,
+            addingSmurf: false,
+            smurfs: action.payload,
+            error: ''
+          }
+        
+          case ADD_SMURF_FAILURE:
+            return{
+              ...state,
+              addingSmurf: false,
+              error: 'Bad News'
+            }
       default:
         return state;
    }

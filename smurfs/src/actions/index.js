@@ -5,10 +5,12 @@ import axios from 'axios';
 */
 
 export const FETCHING_SMURFS = 'FETCHING_SMURFS';
-export const ADDING_SMURF = 'ADDING_SMURF';
-export const UPDATING_SMURF = 'UPDATING_SMURF';
-export const DELETING_SMURF = 'DELETING_SMURF';
-export const FETCHING_SMURFS_ERROR = 'FETCHING_SMURFS_ERROR';
+export const FETCHING_SMURFS_SUCCESS ='FETCHING_SMURFS_SUCCESS';
+export const FETCHING_SMURFS_FAILURE ='FETCHING_SMURFS_FAILURE';
+
+export const ADD_SMURF = 'ADD_SMURF';
+export const ADD_SMURF_SUCCESS = 'ADD_SMURF_SUCCESS';
+export const ADD_SMURF_FAILURE = 'ADD_SMURF_FAILURE';
 
 /*
   For this project you'll need at least 2 action creators for the main portion,
@@ -20,3 +22,26 @@ export const FETCHING_SMURFS_ERROR = 'FETCHING_SMURFS_ERROR';
    U - updateSmurf
    D - deleteSmurf
 */
+
+export const getSmurfs = () => dispatch =>{
+  dispatch({type: FETCHING_SMURFS});
+  axios 
+    .get(
+      'http://localhost:3333/smurfs'
+    )
+    .then(res=> dispatch({type: FETCHING_SMURFS_SUCCESS, payload: res.data}))
+    .catch(err => dispatch({type: FETCHING_SMURFS_ERROR, payload: err}))
+}
+
+export const addASmurf = newSmurf = dispatch =>{
+  dispatch({type: ADD_SMURF});
+  axios
+    .post(
+      'http://localhost:3333/smurfs', newSmurf
+    )
+    .then(res => dispatch ({type: ADD_SMURF_SUCCESS, payload: res.data}))
+    .catch(err => dispatch ({type: ADD_SMURF_FAILURE, payload: err}))
+}
+
+
+//DELETE CAN GO HERE
